@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // User accounts and profiles
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Qari teacher profiles
+    match /qari_profiles/{qariId} {
+      allow read, write: if true;
+    }
+
+    // Parent family learning profiles
+    match /parent_profiles/{parentId} {
+      allow read, write: if true;
+    }
+
+    // Learning requirements posted by parents
+    match /requirements/{requirementId} {
+      allow read, write: if true;
+    }
+
+    // Proposals submitted by Qaris
+    match /proposals/{proposalId} {
+      allow read, write: if true;
+    }
+
+    // Conversations between Parent and Qari
+    match /conversations/{conversationId} {
+      allow read, write: if true;
+
+      // Chat messages subcollection
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Contracts and agreements
+    match /agreements/{agreementId} {
+      allow read, write: if true;
+    }
+
+    // Commission transactions ledger
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+    }
+
+    // Scheduled class sessions and student Quran progress logs
+    match /lesson_sessions/{sessionId} {
+      allow read, write: if true;
+    }
+  }
+}

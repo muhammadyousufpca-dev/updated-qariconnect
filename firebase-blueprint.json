@@ -1,0 +1,268 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Private user account profile and role settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 255 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "role": { "type": "string", "enum": ["qari", "parent"] },
+        "avatarUrl": { "type": "string", "maxLength": 1000 },
+        "phoneNumber": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "displayName", "role"]
+    },
+    "QariProfile": {
+      "title": "QariProfile",
+      "description": "Public profile of a Quran and Tajweed teacher (Qari)",
+      "type": "object",
+      "properties": {
+        "qariId": { "type": "string", "maxLength": 128 },
+        "fullName": { "type": "string", "maxLength": 120 },
+        "title": { "type": "string", "maxLength": 120 },
+        "bio": { "type": "string", "maxLength": 2000 },
+        "country": { "type": "string", "maxLength": 100 },
+        "city": { "type": "string", "maxLength": 100 },
+        "contactNumber": { "type": "string", "maxLength": 50 },
+        "subjects": { "type": "array" },
+        "classesGrades": { "type": "array" },
+        "languages": { "type": "array" },
+        "experienceYears": { "type": "number" },
+        "hasSanad": { "type": "boolean" },
+        "sanadDetails": { "type": "string", "maxLength": 500 },
+        "qualifications": { "type": "string", "maxLength": 1000 },
+        "tajweedSpecialization": { "type": "string", "maxLength": 500 },
+        "hourlyFee": { "type": "number" },
+        "monthlyFee": { "type": "number" },
+        "preferredAgeGroups": { "type": "array" },
+        "availability": { "type": "string", "maxLength": 500 },
+        "avatarUrl": { "type": "string", "maxLength": 1000 },
+        "videoIntroUrl": { "type": "string", "maxLength": 1000 },
+        "isVerified": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["qariId", "fullName", "country", "monthlyFee", "hasSanad"]
+    },
+    "ParentProfile": {
+      "title": "ParentProfile",
+      "description": "Profile of a parent seeking Quran education for children",
+      "type": "object",
+      "properties": {
+        "parentId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 120 },
+        "country": { "type": "string", "maxLength": 100 },
+        "city": { "type": "string", "maxLength": 100 },
+        "preferredLanguage": { "type": "string", "maxLength": 100 },
+        "timezone": { "type": "string", "maxLength": 100 },
+        "childrenNames": { "type": "array" },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["parentId", "parentName", "country"]
+    },
+    "Requirement": {
+      "title": "Requirement",
+      "description": "Parent or student Quran learning request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 120 },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "studentAge": { "type": "number" },
+        "studentGender": { "type": "string", "enum": ["male", "female", "any"] },
+        "currentLevel": { "type": "string", "maxLength": 100 },
+        "goals": { "type": "array" },
+        "country": { "type": "string", "maxLength": 100 },
+        "preferredLanguage": { "type": "string", "maxLength": 100 },
+        "preferredTiming": { "type": "string", "maxLength": 200 },
+        "weeklyFrequency": { "type": "number" },
+        "monthlyBudget": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 1500 },
+        "status": { "type": "string", "enum": ["open", "matched", "closed"] },
+        "proposalsCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["parentId", "parentName", "studentName", "studentAge", "currentLevel", "status"]
+    },
+    "Proposal": {
+      "title": "Proposal",
+      "description": "Teacher response to parent requirement with fee proposal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "requirementId": { "type": "string", "maxLength": 128 },
+        "qariId": { "type": "string", "maxLength": 128 },
+        "qariName": { "type": "string", "maxLength": 120 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "proposedMonthlyFee": { "type": "number" },
+        "hoursPerWeek": { "type": "number" },
+        "message": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["requirementId", "qariId", "parentId", "proposedMonthlyFee", "status"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Direct communication thread between parent and Qari",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 120 },
+        "qariId": { "type": "string", "maxLength": 128 },
+        "qariName": { "type": "string", "maxLength": 120 },
+        "participantIds": { "type": "array" },
+        "requirementId": { "type": "string", "maxLength": 128 },
+        "lastMessage": { "type": "string", "maxLength": 1000 },
+        "lastMessageAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["parentId", "qariId", "participantIds"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Individual message in a conversation thread",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "conversationId": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 120 },
+        "content": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["conversationId", "senderId", "content"]
+    },
+    "Agreement": {
+      "title": "Agreement",
+      "description": "Teaching agreement/contract with commission details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "requirementId": { "type": "string", "maxLength": 128 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 120 },
+        "qariId": { "type": "string", "maxLength": 128 },
+        "qariName": { "type": "string", "maxLength": 120 },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "subject": { "type": "string", "maxLength": 200 },
+        "monthlyFee": { "type": "number" },
+        "agreedFirstFee": { "type": "number" },
+        "hoursPerWeek": { "type": "number" },
+        "platformCommissionRate": { "type": "number" },
+        "platformCommissionAmount": { "type": "number" },
+        "teacherPayoutAmount": { "type": "number" },
+        "paymentStatus": { "type": "string", "enum": ["Pending", "Paid", "Processing", "simulated_pending"] },
+        "paymentSummary": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "completed", "active", "cancelled"] },
+        "proposalId": { "type": "string", "maxLength": 128 },
+        "proposalMessage": { "type": "string", "maxLength": 3000 },
+        "requirementDetails": { "type": "object" },
+        "bothAgreedConfirmation": { "type": "object" },
+        "startDate": { "type": "string", "maxLength": 50 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["parentId", "qariId", "studentName", "monthlyFee", "platformCommissionAmount", "teacherPayoutAmount", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Commission and payment breakdown record for agreements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "agreementId": { "type": "string", "maxLength": 128 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "qariId": { "type": "string", "maxLength": 128 },
+        "grossAmount": { "type": "number" },
+        "commissionRate": { "type": "number" },
+        "commissionAmount": { "type": "number" },
+        "netTeacherAmount": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "paymentStatus": { "type": "string", "enum": ["simulated_pending", "simulated_settled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["agreementId", "grossAmount", "commissionAmount", "netTeacherAmount", "paymentStatus"]
+    },
+    "LessonSession": {
+      "title": "LessonSession",
+      "description": "Scheduled trial lessons or regular classes with Tajweed progress notes",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string", "maxLength": 128 },
+        "agreementId": { "type": "string", "maxLength": 128 },
+        "qariId": { "type": "string", "maxLength": 128 },
+        "qariName": { "type": "string", "maxLength": 120 },
+        "parentId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 120 },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "sessionType": { "type": "string", "enum": ["trial", "regular"] },
+        "date": { "type": "string", "maxLength": 50 },
+        "time": { "type": "string", "maxLength": 50 },
+        "durationMinutes": { "type": "number" },
+        "status": { "type": "string", "enum": ["scheduled", "completed", "cancelled"] },
+        "meetingLink": { "type": "string", "maxLength": 500 },
+        "tajweedFocus": { "type": "string", "maxLength": 500 },
+        "teacherNotes": { "type": "string", "maxLength": 2000 },
+        "studentHomework": { "type": "string", "maxLength": 1000 },
+        "parentRating": { "type": "number" },
+        "parentFeedback": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sessionId", "qariId", "parentId", "studentName", "sessionType", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private user account profile and settings"
+    },
+    "/qari_profiles/{qariId}": {
+      "schema": "QariProfile",
+      "description": "Public profiles of Qari teachers"
+    },
+    "/parent_profiles/{parentId}": {
+      "schema": "ParentProfile",
+      "description": "Parent and family learning profile"
+    },
+    "/requirements/{requirementId}": {
+      "schema": "Requirement",
+      "description": "Parent Quran learning requirements"
+    },
+    "/proposals/{proposalId}": {
+      "schema": "Proposal",
+      "description": "Teacher proposals to parent requirements"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "Chat channels between parents and teachers"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages sent within a conversation"
+    },
+    "/agreements/{agreementId}": {
+      "schema": "Agreement",
+      "description": "Signed learning contracts between parents and Qaris"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Commission and financial transaction ledgers"
+    },
+    "/lesson_sessions/{sessionId}": {
+      "schema": "LessonSession",
+      "description": "Trial lesson appointments and regular class logs"
+    }
+  }
+}

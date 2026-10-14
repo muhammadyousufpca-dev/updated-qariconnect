@@ -1,0 +1,8 @@
+{
+  "name": "QariConnect",
+  "description": "Global marketplace connecting parents and students with qualified Quran and Tajweed teachers (Qaris).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
